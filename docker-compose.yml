@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  my-database:
+    image: mariadb:latest
+    environment:
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - "./db:/var/lib/mysql"
+    networks:
+      - my-network-1
+  
+  my-drupal:
+    build:
+      context: ${DOCKERFILES_FOLDER}/apache-php
+      dockerfile: Dockerfile
+    volumes:
+      - "./drupal:/var/www/html"
+    ports:
+      - ${APACHE_PORT}:80
+    networks:
+      - my-network-1
+
+networks:
+  my-network-1:
+    driver: bridge
