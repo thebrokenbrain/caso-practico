@@ -21,6 +21,7 @@ services:
       - "./drupal:/var/www/html"
     ports:
       - ${APACHE_PORT}:80
+    user: "${UID}:${GID}"
     networks:
       - my-network-1
 
